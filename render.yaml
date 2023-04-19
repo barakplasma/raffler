@@ -1,0 +1,46 @@
+databases:
+  - name: vue-js-israel-db
+    plan: free
+    ipAllowList: []
+services:
+  - type: web
+    env: docker
+    name: directus
+    plan: free
+    healthCheckPath: /server/health
+    envVars:
+      - key: DB_CLIENT
+        value: postgres
+      - key: DB_HOST
+        value: ignore
+      - key: DB_PORT
+        value: 5432
+      - key: DB_USER
+        value: ignore
+      - key: DB_DATABASE
+        value: ignore
+      - key: DB_PASSWORD
+        value: ignore 
+      - key: DB_CONNECTION_STRING
+        fromDatabase:
+          name: vue-js-israel-db
+          property: connectionString
+      - key: KEY
+        generateValue: true
+      - key: SECRET
+        generateValue: true
+      - key: ADMIN_PASSWORD
+        generateValue: true
+      - key: ADMIN_EMAIL
+        value: 'barakplasma@gmail.com'
+      - key: LOG_STYLE
+        value: raw
+      - key: CORS_ENABLED
+        value: true
+      - key: CORS_ORIGIN
+        value: true
+      - key: PORT
+        fromService:
+          type: web
+          name: directus
+          property: port
