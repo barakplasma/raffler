@@ -1,11 +1,14 @@
 <script lang="ts">
 import { reactive } from 'vue'
+import type { DefaultItem } from "@directus/sdk";
+
 import { directus } from '../api/client'
+import type { Participants } from "@/api/types";
 
 export default {
   setup() {
-
-    let state = reactive({participants: new Array()})
+    let participants: DefaultItem<Participants>[] = [];
+    let state = reactive({participants})
 
     directus.items('Participants').readByQuery({}).then((response) => {
       if (response.data) {
