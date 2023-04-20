@@ -3,16 +3,24 @@ import { reactive } from 'vue'
 import type { DefaultItem } from "@directus/sdk";
 
 import { directus } from '../api/client'
-import type { Participants } from "@/api/types";
+import type { Participants, Gifts } from "@/api/types";
 
 export default {
   setup() {
     let participants: DefaultItem<Participants>[] = [];
-    let state = reactive({participants})
+    let gifts: DefaultItem<Gifts>[] = [];
+    let state = reactive({participants, gifts})
 
     directus.items('Participants').readByQuery({}).then((response) => {
       if (response.data) {
         state.participants = response.data
+      }
+    })
+
+    directus.items('gifts').readByQuery({}).then((response) => {
+      if (response.data) {
+        console.log(JSON.stringify(response.data))
+        state.gifts = response.data
       }
     })
 
@@ -26,9 +34,16 @@ export default {
 <template>
   <div class="about">
     <h1>This is an about page</h1>
+    <h2>Participants</h2>
     <ul>
       <li v-for="person in state.participants" :key="person.id">
         {{ person.full_name }}
+      </li>
+    </ul>
+    <h2>Gifts</h2>
+    <ul>
+      <li v-for="gift in state.gifts" :key="gift.id">
+        {{ gift.short_name }} {{ gift.details }}
       </li>
     </ul>
   </div>
