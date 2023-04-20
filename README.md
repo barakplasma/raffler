@@ -1,6 +1,6 @@
 # Directus on Render
 
-[![Deploy to Render](http://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?url=https://github.com/barakplasma/raffler)
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/barakplasma/raffler)
 
 ## alternative: docker compose
 
