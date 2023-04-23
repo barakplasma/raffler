@@ -312,7 +312,7 @@ export type DirectusWebhooks = {
 };
 
 export type Gifts = {
-  assigned_to?: number | Meetup | null;
+  assigned_to?: Meetup | null;
   date_created?: string | null;
   date_updated?: string | null;
   details?: string | null;

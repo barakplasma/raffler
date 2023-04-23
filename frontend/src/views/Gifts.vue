@@ -1,26 +1,18 @@
 <script lang="ts">
 import { reactive } from 'vue'
-import type { DefaultItem } from "@directus/sdk";
 
 import { directus } from '../api/client'
 import type { Gifts } from "@/api/types";
 
-const display = (item: DefaultItem<Gifts>) => {
-  if (!item.details || !item.short_name) {
-    return 'unknown';
-  }
-  if (item.assigned_to instanceof "Object" && "Title" in item.assigned_to) {
-    return `${item.short_name} - ${item.details} - ${item.assigned_to.title}`;
-  }
-  return `${item.short_name} - ${item.details}`;
-};
-
 export default {
   setup() {
-    let gifts: DefaultItem<Gifts>[] = [];
-    let state = reactive({gifts})
+    let gifts: Gifts[] = [];
+    let state = reactive({ gifts })
 
-    directus.items('gifts').readByQuery({}).then((response) => {
+    directus.items('gifts').readByQuery({
+      limit: -1,
+      fields: ['*', 'assigned_to.Title']
+    }).then((response) => {
       if (response.data) {
         state.gifts = response.data
       }
@@ -28,23 +20,38 @@ export default {
 
     return {
       state,
-      display,
     }
   }
 }
 </script>
 
 <template>
-  <div>
-    <h2>Gifts</h2>
-    <ul>
-      <li v-for="item in state.gifts">
-        {{ display(item) }}
-      </li>
-    </ul>
-  </div>
+  <section>
+    <header>
+      <h2>Gifts</h2>
+    </header>
+
+    <section v-for="item in state.gifts" :key="item.id">
+      <aside>
+        <h3>{{ item.short_name }}</h3>
+        <p>{{ item.details }}</p>
+        <p>Assigned to:</p>
+        <p>{{ !!item.assigned_to && "Title" in item.assigned_to ? item?.assigned_to?.Title : "" }}</p>
+      </aside>
+    </section>
+
+  </section>
 </template>
 
 <style>
-
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
 </style>
