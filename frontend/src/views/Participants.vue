@@ -28,7 +28,7 @@ export default {
 
     <section v-for="item in state.participants" :key="item.id">
       <aside>
-        <img :src="item.photo_url" />
+        <img v-if="typeof item.photo_url === 'string'" :src="item.photo_url" />
         <h3>{{ item.full_name }}</h3>
         <p>{{ item.email }}</p>
       </aside>
