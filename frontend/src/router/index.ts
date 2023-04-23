@@ -17,6 +17,11 @@ const router = createRouter({
       path: '/Meetups',
       name: 'Meetups',
       component: () => import('../views/Meetups.vue')
+    },
+    {
+      path: '/Raffle',
+      name: 'Raffle',
+      component: () => import('../views/Raffle.vue')
     }
   ]
 })
