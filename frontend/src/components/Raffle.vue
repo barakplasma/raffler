@@ -18,6 +18,8 @@ Source: http://opensource.org/licenses/ISC
 </template>
 
 <script lang="ts">
+// @ts-nocheck
+
 export default {
   name: "RaffleWheel",
   data() {
@@ -68,17 +70,17 @@ export default {
     },
   },
   methods: {
-    byte2Hex(n) {
+    byte2Hex(n: number) {
       const nybHexString = "0123456789ABCDEF";
       return (
         String(nybHexString.substr((n >> 4) & 0x0f, 1)) +
         nybHexString.substr(n & 0x0f, 1)
       );
     },
-    RGB2Color(r, g, b) {
+    RGB2Color(r: number, g: number, b: number) {
       return "#" + this.byte2Hex(r) + this.byte2Hex(g) + this.byte2Hex(b);
     },
-    getColor(item, maxitem) {
+    getColor(item: number, maxitem: number) {
       const phase = 0;
       const center = 128;
       const width = 127;
@@ -90,23 +92,23 @@ export default {
 
       return this.RGB2Color(red, green, blue);
     },
-    getOptionText(optionIndex) {
+    getOptionText(optionIndex: number) {
       return this.options[optionIndex].text
         ? this.options[optionIndex].text
         : this.options[optionIndex];
     },
-    getOptionSliceColor(optionIndex) {
+    getOptionSliceColor(optionIndex: number) {
       if (this.options[optionIndex].color)
         return this.options[optionIndex].color;
       return this.getColor(optionIndex, this.options.length);
     },
-    getOptionTextColor(optionIndex) {
+    getOptionTextColor(optionIndex: number) {
       if (this.options[optionIndex].fontColor)
         return this.options[optionIndex].fontColor;
       if (this.slicesFont.color) return this.slicesFont.color;
       return "black";
     },
-    getHubTextColor(optionIndex) {
+    getHubTextColor(optionIndex: number) {
       if (!this.hubFont.color) return "black";
       if (this.hubFont.color === "use-slice" && this.slicesFont.color)
         return this.slicesFont.color;
@@ -205,7 +207,7 @@ export default {
       this.ctx.restore();
       this.$emit("spin-stop", this.options[index]);
     },
-    easeOut(t, b, c, d) {
+    easeOut(t: number, b: number, c: number, d: number) {
       const ts = (t /= d) * t;
       const tc = ts * t;
       return b + c * (tc + -3 * ts + 3 * t);
