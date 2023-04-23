@@ -1,4 +1,4 @@
-<script lang="ts">
+<script setup lang="ts">
 import { reactive, watch } from 'vue'
 import Raffle from "@/components/Raffle.vue";
 
@@ -10,11 +10,13 @@ let state: {
     gifts: Gifts[],
     meetup: number,
     participants: Participants[],
+    winner: Pick<Participants, "full_name" | "photo_url">,
 } = reactive({
     meetups: [],
     gifts: [],
     meetup: 0,
     participants: [],
+    winner: { full_name: "" },
 });
 
 function getGiftsForMeetup() {
@@ -51,22 +53,21 @@ watch(() => state.meetup, (meetup) => {
     }
 });
 
-export default {
-    setup() {
-        directus.items("meetup").readByQuery({ fields: ['*'] }).then((response) => {
-            if (response.data) {
-                state.meetups = response.data;
-            }
-        });
-
-        return {
-            state,
-        };
-    },
-    components: {
-        Raffle,
+function displayWinnerPhoto(winner: string) {
+    state.winner.full_name = winner;
+    let particpant = state.participants.find(p => p.full_name === state.winner.full_name)
+    if (particpant && particpant.photo_url) {
+        state.winner.photo_url = particpant.photo_url;
+    } else {
+        state.winner.photo_url = "winner.jpg";
     }
 }
+
+directus.items("meetup").readByQuery({ fields: ['*'] }).then((response) => {
+    if (response.data) {
+        state.meetups = response.data;
+    }
+});
 </script>
 
 <template>
@@ -85,7 +86,11 @@ export default {
                 <option v-for="item in state.gifts" :key="item.id" :value="item.id">{{ item.details }}</option>
             </select>
         </aside>
-        <Raffle :options="state.participants.map(p => p.full_name)" v-if="state.participants.length > 0" />
+        <aside v-if="state.winner.full_name">
+            <img v-if="state.winner.photo_url" :src="state.winner.photo_url" alt="">
+            <h3>Winner: {{ state.winner.full_name }}</h3>
+        </aside>
+        <Raffle :options="state.participants.map(p => p.full_name)" v-if="state.participants.length > 0" @spin-stop="displayWinnerPhoto" />
     </section>
 </template>
 

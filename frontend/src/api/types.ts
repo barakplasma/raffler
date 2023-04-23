@@ -340,6 +340,7 @@ export type Participants = {
   email?: string | null;
   full_name: string;
   id: string;
+  photo_url?: string | null;
   user_created?: string | DirectusUsers | null;
   user_updated?: string | DirectusUsers | null;
 };
