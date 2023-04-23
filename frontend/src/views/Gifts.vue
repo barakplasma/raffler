@@ -5,6 +5,16 @@ import type { DefaultItem } from "@directus/sdk";
 import { directus } from '../api/client'
 import type { Gifts } from "@/api/types";
 
+const display = (item: DefaultItem<Gifts>) => {
+  if (!item.details || !item.short_name) {
+    return 'unknown';
+  }
+  if (item.assigned_to instanceof "Object" && "Title" in item.assigned_to) {
+    return `${item.short_name} - ${item.details} - ${item.assigned_to.title}`;
+  }
+  return `${item.short_name} - ${item.details}`;
+};
+
 export default {
   setup() {
     let gifts: DefaultItem<Gifts>[] = [];
@@ -17,7 +27,8 @@ export default {
     })
 
     return {
-      state
+      state,
+      display,
     }
   }
 }
@@ -27,8 +38,8 @@ export default {
   <div>
     <h2>Gifts</h2>
     <ul>
-      <li v-for="gift in state.gifts" :key="gift.id">
-        {{ gift.short_name }} {{ gift.details }}
+      <li v-for="item in state.gifts">
+        {{ display(item) }}
       </li>
     </ul>
   </div>

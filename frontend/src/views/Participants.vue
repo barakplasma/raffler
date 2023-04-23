@@ -5,20 +5,23 @@ import type { DefaultItem } from "@directus/sdk";
 import { directus } from '../api/client'
 import type { Participants } from "@/api/types";
 
+const display = (item: DefaultItem<Participants>) => {
+  return item.full_name;
+};
+
 export default {
   setup() {
     let participants: DefaultItem<Participants>[] = [];
-    let state = reactive({participants})
-
-    directus.items('Participants').readByQuery({}).then((response) => {
+    let state = reactive({ participants });
+    directus.items("Participants").readByQuery({}).then((response) => {
       if (response.data) {
-        state.participants = response.data
+        state.participants = response.data;
       }
-    })
-
+    });
     return {
-      state
-    }
+      state,
+      display,
+    };
   }
 }
 </script>
@@ -27,13 +30,11 @@ export default {
   <div>
     <h2>Participants</h2>
     <ul>
-      <li v-for="person in state.participants" :key="person.id">
-        {{ person.full_name }}
+      <li v-for="item in state.participants">
+        {{ display(item) }}
       </li>
     </ul>
   </div>
 </template>
 
-<style>
-
-</style>
+<style></style>
