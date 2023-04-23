@@ -35,8 +35,8 @@ export default {
       <aside>
         <h3>{{ item.short_name }}</h3>
         <p>{{ item.details }}</p>
-        <p>Assigned to:</p>
-        <p>{{ !!item.assigned_to && "Title" in item.assigned_to ? item?.assigned_to?.Title : "" }}</p>
+        <p v-if="item.assigned_to">Assigned to meetup:</p>
+        <p v-if="item.assigned_to" class="recipient">{{ "Title" in item.assigned_to ? item?.assigned_to?.Title : "" }}</p>
       </aside>
     </section>
 
@@ -44,14 +44,7 @@ export default {
 </template>
 
 <style>
-.card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 0.5rem;
-  margin-bottom: 1rem;
+.recipient {
+  font-style: italic;
 }
 </style>
