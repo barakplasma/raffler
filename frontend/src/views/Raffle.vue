@@ -1,20 +1,20 @@
 <script lang="ts">
-import { reactive, ref } from 'vue'
+import { ref } from 'vue'
 import Raffle from "@/components/Raffle.vue";
 
 import { directus } from '../api/client'
 import type { Gifts, Meetup, Participants } from "@/api/types"
 
 let meetup = ref(0);
-let gifts = reactive<Gifts[]>([]);
-let participants = reactive<Participants[]>([]);
-let meetups = reactive<Meetup[]>([]);
+let gifts = ref<Gifts[]>([]);
+let participants = ref<Participants[]>([]);
+let meetups = ref<Meetup[]>([]);
 
 export default {
     setup() {
         directus.items("meetup").readByQuery({ fields: ['*'] }).then((response) => {
             if (response.data) {
-                meetups = response.data;
+                meetups.value = response.data;
             }
         });
 
@@ -28,10 +28,10 @@ export default {
                         }
                     }
                 },
-                fields: ['*', 'assigned_to.Title']
+                fields: ['*', 'assigned_to.Title', 'assigned_to.id']
             }).then((response) => {
                 if (response.data) {
-                    gifts = response.data;
+                    gifts.value = response.data;
                 }
             });
         }
@@ -39,7 +39,7 @@ export default {
         function getParticipantsInMeetup() {
             directus.items("Participants").readByQuery({ fields: ['*'] }).then((response) => {
                 if (response.data) {
-                    participants = response.data;
+                    participants.value = response.data;
                 }
             });
         }
