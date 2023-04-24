@@ -119,9 +119,9 @@ export default {
     drawRouletteWheel() {
       const canvas = this.$refs["wheel"];
       if (canvas.getContext) {
-        const outsideRadius = 200;
-        const textRadius = 160;
-        const insideRadius = 125;
+        const outsideRadius = 250;
+        const textRadius = 180;
+        const insideRadius = 120;
 
         this.ctx = canvas.getContext("2d");
         this.ctx.clearRect(0, 0, 500, 500);
@@ -150,7 +150,7 @@ export default {
             250 + Math.cos(angle + this.arc / 2) * textRadius,
             250 + Math.sin(angle + this.arc / 2) * textRadius
           );
-          this.ctx.rotate(angle + this.arc / 2 + Math.PI / 2);
+          this.ctx.rotate(angle + this.arc / 2 + Math.PI / 2 + Math.PI / 2); // Rotate by 90 degrees
           const text = this.getOptionText(i);
           this.ctx.fillText(text, -this.ctx.measureText(text).width / 2, 0);
           this.ctx.restore();
