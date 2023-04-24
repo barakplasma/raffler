@@ -81,17 +81,26 @@ directus.items("meetup").readByQuery({ fields: ['*'] }).then((response) => {
                 <option :value="0">Choose a meetup</option>
                 <option v-for="item in state.meetups" :key="item.id" :value="item.id">{{ item.Title }}</option>
             </select>
-            <label for="gift">Choose a gift</label>
-            <select name="gift">
-                <option v-for="item in state.gifts" :key="item.id" :value="item.id">{{ item.details }}</option>
-            </select>
+            <h3>Gifts</h3>
+            <div v-for="item in state.gifts" :key="item.id" :value="item.id" class="gift">
+                <label :for="item.id.toString()">{{ item.id }})</label>{{ item.short_name }}
+                <input type="checkbox" :name="item.id.toString()" />
+            </div>
         </aside>
         <aside v-if="state.winner.full_name">
             <img v-if="state.winner.photo_url" :src="state.winner.photo_url" alt="">
             <h3>Winner: {{ state.winner.full_name }}</h3>
         </aside>
-        <Raffle :options="state.participants.map(p => p.full_name)" v-if="state.participants.length > 0" @spin-stop="displayWinnerPhoto" />
+        <Raffle :options="state.participants.map(p => p.full_name)" v-if="state.participants.length > 0"
+            @spin-stop="displayWinnerPhoto" />
     </section>
 </template>
 
-<style></style>
+<style>
+.gift {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+</style>
