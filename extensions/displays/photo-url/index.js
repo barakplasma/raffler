@@ -1,5 +1,5 @@
 import { defineDisplay } from '@directus/extensions-sdk';
-import { unref, watch, isRef, shallowRef, ref, defineComponent, openBlock, createElementBlock } from 'vue';
+import { unref, watch, isRef, shallowRef, ref, defineComponent, resolveComponent, openBlock, createElementBlock, createBlock, withCtx, createElementVNode } from 'vue';
 
 function toValue(r) {
   return typeof r === "function" ? r() : unref(r);
@@ -284,12 +284,16 @@ const _hoisted_1 = { key: 0 };
 const _hoisted_2 = ["src"];
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  const _component_v_avatar = resolveComponent("v-avatar");
+
   return (_ctx.isLoading)
     ? (openBlock(), createElementBlock("span", _hoisted_1, "Loading"))
-    : (openBlock(), createElementBlock("img", {
-        key: 1,
-        src: _ctx.value
-      }, null, 8 /* PROPS */, _hoisted_2))
+    : (openBlock(), createBlock(_component_v_avatar, { key: 1 }, {
+        default: withCtx(() => [
+          createElementVNode("img", { src: _ctx.value }, null, 8 /* PROPS */, _hoisted_2)
+        ]),
+        _: 1 /* STABLE */
+      }))
 }
 
 script.render = render;

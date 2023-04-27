@@ -1,6 +1,8 @@
 <template>
 	<span v-if="isLoading">Loading</span>
-  	<img v-else :src="value">
+	<v-avatar v-else>
+		<img :src="value">
+	</v-avatar>
 </template>
 
 <script lang="ts">
