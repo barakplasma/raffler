@@ -1,11 +1,12 @@
 version: '3'
 services:
   directus:
-    image: directus/directus:latest
+    image: directus/directus:10
     ports:
       - 8055:8055
     volumes:
       - uploads:/directus/uploads
+      - ./extensions:/directus/extensions
     environment:
       KEY: '255d861b-5ea1-5996-9aa3-922530ec40b1' # use docker compose secrets instead
       SECRET: '6116487b-cda1-52c2-b5b5-c8022c45e263' # use docker compose secrets instead
@@ -16,7 +17,8 @@ services:
       DB_DATABASE: 'directus'
       DB_USER: 'directus'
       DB_PASSWORD: 'directus'
-
+      EXTENSIONS_AUTO_RELOAD: 'true'
+      CONTENT_SECURITY_POLICY_DIRECTIVES__IMG-SRC: 'self,secure.meetupstatic.com,data,blob'
 
       ADMIN_EMAIL: 'barakplasma@gmail.com'
       ADMIN_PASSWORD: 'd1r3ctu5' # use docker compose secrets instead
