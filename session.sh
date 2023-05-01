@@ -10,7 +10,7 @@ cd /tmp/dir-ext
 
 npm init directus-extension
 
-code .
+code photo-url
 
 cd /home/michael/Projects/raffler
 
