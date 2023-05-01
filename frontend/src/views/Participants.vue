@@ -30,7 +30,7 @@ export default {
       <aside>
         <img v-if="typeof item.photo_url === 'string'" :src="item.photo_url" />
         <h3>{{ item.full_name }}</h3>
-        <p>{{ item.email }}</p>
+        <a v-if="item.profile_url" :href="item.profile_url">Profile</a>
       </aside>
     </section>
 
