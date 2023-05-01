@@ -10,9 +10,9 @@ cd /tmp/dir-ext
 
 npm init directus-extension
 
-cd /home/michael/Projects/raffler/extensions/displays/photo-url
+cd /home/michael/Projects/raffler
 
-tree -L 2
+tree -L 2 -I node_modules ./extensions/displays/photo-url
 
 git reflog
 
