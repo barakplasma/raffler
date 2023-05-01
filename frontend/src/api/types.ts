@@ -328,6 +328,7 @@ export type Meetup = {
   date_updated?: string | null;
   end_time?: string | null;
   id: number;
+  meetup_url?: string | null;
   start_time?: string | null;
   Title?: string | null;
   user_created?: string | DirectusUsers | null;
@@ -337,10 +338,10 @@ export type Meetup = {
 export type Participants = {
   date_created?: string | null;
   date_updated?: string | null;
-  email?: string | null;
   full_name: string;
   id: string;
   photo_url?: string | null;
+  profile_url?: string | null;
   user_created?: string | DirectusUsers | null;
   user_updated?: string | DirectusUsers | null;
 };
