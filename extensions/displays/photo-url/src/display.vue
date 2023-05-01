@@ -1,7 +1,7 @@
 <template>
 	<span v-if="isLoading">Loading</span>
 	<v-avatar v-else>
-		<img :src="value">
+		<img :src="src">
 	</v-avatar>
 </template>
 
@@ -15,6 +15,7 @@ export default defineComponent({
 
 		return {
 			isLoading,
+			src: props.value,
 		}
 	},
 	props: {
