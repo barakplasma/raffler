@@ -14,6 +14,6 @@ code photo-url
 
 cd /home/michael/Projects/raffler
 
-tree -L 2 -I node_modules ./extensions/displays/photo-url
+tree -L 5 -I node_modules
 
 docker-compose up
