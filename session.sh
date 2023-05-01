@@ -8,9 +8,11 @@ mkdir /tmp/dir-ext
 
 cd /tmp/dir-ext
 
-npm init directus-extension
+pnpm create directus-extension
 
-code photo-url
+code photourl
+
+cp -r /tmp/dir-ext/photourl/dist/index.js /home/michael/Projects/raffler/extensions/displays/photourl
 
 cd /home/michael/Projects/raffler
 
