@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<section class="carousel">
-			<img :src="state.items[state.index].photo_url || 'https://picsum.photos/200'" />
+			<img :src="state.items[state.index].photo_url || state.default_photo" />
 			<div class="controls">
 				<h3>{{ state.items[state.index].full_name }}</h3>
 				<button @click="prev">Prev</button>
@@ -58,6 +58,7 @@ export default defineComponent({
 			name: props.name,
 			index: 0,
 			items: useItems(collection, { fields: ['*.*'] }).items,
+			default_photo: 'https://secure.meetupstatic.com/photos/member/9/f/2/a/highres_244660746.jpeg',
 		});
 
 		const prev = () => {

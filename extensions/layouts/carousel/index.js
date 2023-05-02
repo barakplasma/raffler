@@ -8,7 +8,8 @@ var script = defineComponent({
       collection: props.collection,
       name: props.name,
       index: 0,
-      items: useItems(collection, { fields: ["*.*"] }).items
+      items: useItems(collection, { fields: ["*.*"] }).items,
+      default_photo: "https://secure.meetupstatic.com/photos/member/9/f/2/a/highres_244660746.jpeg"
     });
     const prev = () => {
       if (state.index === 0) {
@@ -51,7 +52,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (openBlock(), createElementBlock("div", null, [
     createElementVNode("section", _hoisted_1, [
       createElementVNode("img", {
-        src: _ctx.state.items[_ctx.state.index].photo_url || 'https://picsum.photos/200'
+        src: _ctx.state.items[_ctx.state.index].photo_url || _ctx.state.default_photo
       }, null, 8 /* PROPS */, _hoisted_2),
       createElementVNode("div", _hoisted_3, [
         createElementVNode("h3", null, toDisplayString(_ctx.state.items[_ctx.state.index].full_name), 1 /* TEXT */),
