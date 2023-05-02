@@ -1,9 +1,9 @@
 <template>
 	<div>
 		<section class="carousel">
-			<img :src="state.items[state.index]?.photo_url || state.default_photo" />
+			<img :src="state.items[state.index]?.photo_url" />
 			<div class="controls">
-				<h3>{{ state.items[state.index]?.full_name || 'unknown' }}</h3>
+				<h3>{{ state.items[state.index]?.full_name }}</h3>
 				<button @click="prev">Prev</button>
 				<button @click="next">Next</button>
 			</div>
@@ -62,13 +62,14 @@ export default defineComponent({
 				filter: ref({
 					photo_url: {
 						_nnull: true,
-					}
+					},
+					full_name: {
+						_nnull: true,
+					},
 				}),
 				search: ref(),
 				page: ref(1),
 			}).items,
-			default_photo:
-				"https://secure.meetupstatic.com/photos/member/9/f/2/a/highres_244660746.jpeg",
 		});
 
 		const prev = () => {
