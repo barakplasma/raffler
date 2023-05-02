@@ -1,15 +1,33 @@
-import { ref, defineComponent, resolveComponent, openBlock, createElementBlock, createElementVNode, toDisplayString, Fragment, renderList, createBlock, withCtx, createVNode, createTextVNode } from 'vue';
+import { defineComponent, ref, reactive, openBlock, createElementBlock, createElementVNode, toDisplayString } from 'vue';
 import { useItems, defineLayout } from '@directus/extensions-sdk';
 
-const collection = ref("");
 var script = defineComponent({
   setup: (props) => {
-    collection.value = props.collection;
-    const items = useItems(collection, { fields: ["*.*"] }).items;
-    return {
-      name: props.name,
+    const collection = ref(props.collection);
+    const state = reactive({
       collection: props.collection,
-      items
+      name: props.name,
+      index: 0,
+      items: useItems(collection, { fields: ["*.*"] }).items
+    });
+    const prev = () => {
+      if (state.index === 0) {
+        state.index = state.items.length - 1;
+        return;
+      }
+      state.index--;
+    };
+    const next = () => {
+      if (state.index === state.items.length - 1) {
+        state.index = 0;
+        return;
+      }
+      state.index++;
+    };
+    return {
+      prev,
+      next,
+      state
     };
   },
   inheritAttrs: false,
@@ -25,47 +43,32 @@ var script = defineComponent({
   }
 });
 
-const _hoisted_1 = { class: "container" };
+const _hoisted_1 = { class: "carousel" };
 const _hoisted_2 = ["src"];
-const _hoisted_3 = {
-  key: 1,
-  src: "https://picsum.photos/200/200"
-};
+const _hoisted_3 = { class: "controls" };
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  const _component_v_card_title = resolveComponent("v-card-title");
-  const _component_v_card = resolveComponent("v-card");
-
   return (openBlock(), createElementBlock("div", null, [
-    createElementVNode("p", null, "Name: " + toDisplayString(_ctx.name), 1 /* TEXT */),
-    createElementVNode("p", null, "Collection: " + toDisplayString(_ctx.collection), 1 /* TEXT */),
     createElementVNode("section", _hoisted_1, [
-      (openBlock(true), createElementBlock(Fragment, null, renderList(_ctx.items, (item) => {
-        return (openBlock(), createBlock(_component_v_card, null, {
-          default: withCtx(() => [
-            (item.photo_url)
-              ? (openBlock(), createElementBlock("img", {
-                  key: 0,
-                  src: item.photo_url
-                }, null, 8 /* PROPS */, _hoisted_2))
-              : (openBlock(), createElementBlock("img", _hoisted_3)),
-            createVNode(_component_v_card_title, null, {
-              default: withCtx(() => [
-                createTextVNode(toDisplayString(item.full_name), 1 /* TEXT */)
-              ]),
-              _: 2 /* DYNAMIC */
-            }, 1024 /* DYNAMIC_SLOTS */)
-          ]),
-          _: 2 /* DYNAMIC */
-        }, 1024 /* DYNAMIC_SLOTS */))
-      }), 256 /* UNKEYED_FRAGMENT */))
+      createElementVNode("img", {
+        src: _ctx.state.items[_ctx.state.index].photo_url || 'https://picsum.photos/200'
+      }, null, 8 /* PROPS */, _hoisted_2),
+      createElementVNode("div", _hoisted_3, [
+        createElementVNode("h3", null, toDisplayString(_ctx.state.items[_ctx.state.index].full_name), 1 /* TEXT */),
+        createElementVNode("button", {
+          onClick: _cache[0] || (_cache[0] = (...args) => (_ctx.prev && _ctx.prev(...args)))
+        }, "Prev"),
+        createElementVNode("button", {
+          onClick: _cache[1] || (_cache[1] = (...args) => (_ctx.next && _ctx.next(...args)))
+        }, "Next")
+      ])
     ])
   ]))
 }
 
 var e=[],t=[];function n(n,r){if(n&&"undefined"!=typeof document){var a,s=!0===r.prepend?"prepend":"append",d=!0===r.singleTag,i="string"==typeof r.container?document.querySelector(r.container):document.getElementsByTagName("head")[0];if(d){var u=e.indexOf(i);-1===u&&(u=e.push(i)-1,t[u]={}),a=t[u]&&t[u][s]?t[u][s]:t[u][s]=c();}else a=c();65279===n.charCodeAt(0)&&(n=n.substring(1)),a.styleSheet?a.styleSheet.cssText+=n:a.appendChild(document.createTextNode(n));}function c(){var e=document.createElement("style");if(e.setAttribute("type","text/css"),r.attributes)for(var t=Object.keys(r.attributes),n=0;n<t.length;n++)e.setAttribute(t[n],r.attributes[t[n]]);var a="prepend"===s?"afterbegin":"beforeend";return i.insertAdjacentElement(a,e),e}}
 
-var css = "\n.container[data-v-24b4a97a] {\n\tdisplay: grid;\n\tgrid-template-columns: repeat(3, 1fr);\n\tgrid-gap: 1rem;\n}\n";
+var css = "\n.carousel[data-v-24b4a97a] {\n  position: relative;\n  height: 300px;\n  width: 400px;\n  margin: auto;\n}\n.carousel img[data-v-24b4a97a] {\n  position: absolute;\n  top: 0;\n  left: 0;\n  height: 100%;\n  width: 100%;\n  object-fit: cover;\n}\n.controls[data-v-24b4a97a] {\n  position: absolute;\n  bottom: 0;\n  left: 50%;\n  transform: translateX(-50%);\n  margin-bottom: 10px;\n  color: white;\n  background-color: hsla(0, 0%, 0%, 0.5);\n}\nbutton[data-v-24b4a97a] {\n  margin: 0 10px;\n  border: 1px solid white;\n  border-radius: 25%;\n}\n";
 n(css,{});
 
 script.render = render;

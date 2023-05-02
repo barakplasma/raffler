@@ -1,40 +1,85 @@
 <template>
 	<div>
-		<p>Name: {{ name }}</p>
-		<p>Collection: {{ collection }}</p>
-		<section class="container">
-			<v-card v-for="item in items">
-				<img v-if="item.photo_url" :src="item.photo_url" />
-				<img v-else src="https://picsum.photos/200/200" />
-				<v-card-title>{{ item.full_name }}</v-card-title>
-			</v-card>
+		<section class="carousel">
+			<img :src="state.items[state.index].photo_url || 'https://picsum.photos/200'" />
+			<div class="controls">
+				<h3>{{ state.items[state.index].full_name }}</h3>
+				<button @click="prev">Prev</button>
+				<button @click="next">Next</button>
+			</div>
 		</section>
 	</div>
 </template>
 
 <style scoped>
-.container {
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	grid-gap: 1rem;
+.carousel {
+  position: relative;
+  height: 300px;
+  width: 400px;
+  margin: auto;
+}
+
+.carousel img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.controls {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 10px;
+  color: white;
+  background-color: hsla(0, 0%, 0%, 0.5);
+}
+
+button {
+  margin: 0 10px;
+  border: 1px solid white;
+  border-radius: 25%;
 }
 </style>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, reactive, ref } from 'vue';
 import { useItems } from '@directus/extensions-sdk';
-
-const collection = ref('');
 
 export default defineComponent({
 	setup: (props) => {
-		collection.value = props.collection;
-		const items = useItems(collection, { fields: ['*.*'] }).items;
+		const collection = ref(props.collection);
+
+		const state = reactive({
+			collection: props.collection,
+			name: props.name,
+			index: 0,
+			items: useItems(collection, { fields: ['*.*'] }).items,
+		});
+
+		const prev = () => {
+			if (state.index === 0) {
+				state.index = state.items.length - 1;
+				return;
+			}
+			state.index--;
+		}
+
+		const next = () => {
+			if (state.index === state.items.length - 1) {
+				state.index = 0;
+				return;
+			}
+			state.index++;
+		}
 
 		return {
-			name: props.name,
-			collection: props.collection,
-			items: items,
+			prev,
+			next,
+			state
 		}
 	},
 	inheritAttrs: false,
