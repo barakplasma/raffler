@@ -18,8 +18,7 @@ services:
       DB_USER: 'directus'
       DB_PASSWORD: 'directus'
       EXTENSIONS_AUTO_RELOAD: 'true'
-      CONTENT_SECURITY_POLICY_DIRECTIVES__IMG-SRC: 'self,localhost:8055,secure.meetupstatic.com,data:,blob:'
-
+      CONTENT_SECURITY_POLICY_DIRECTIVES__IMG-SRC: 'self, localhost:8055, 0.0.0.0:8055, fastly.picsum.photos, picsum.photos, secure.meetupstatic.com, data:, blob:'
       ADMIN_EMAIL: 'barakplasma@gmail.com'
       ADMIN_PASSWORD: 'd1r3ctu5' # use docker compose secrets instead
     depends_on:
