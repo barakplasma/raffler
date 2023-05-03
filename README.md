@@ -1,6 +1,6 @@
 # Raffler (project to show off Directus SDK)
 This project shows off how to connect the Directus JS SDK to a Directus instance in order to display the contents of a Postgres DB.
-It relates to [this Vue.js Israel Meetup](https://www.meetup.com/vue-js/events/292584374/) talk ( [slides are here](https://docs.google.com/presentation/d/1bKf_O1RzwxsSemDOckpvSxaURMWIbjZbC_w2QpN2aqw/edit?usp=sharing) )
+It relates to [this Vue.js Israel Meetup](https://www.meetup.com/vue-js/events/292584374/) talk ( [slides are here](https://docs.google.com/presentation/d/1bKf_O1RzwxsSemDOckpvSxaURMWIbjZbC_w2QpN2aqw/edit?usp=sharing) ) [photos of the event](https://drive.google.com/drive/folders/19QczKSxmEPJPsAYZQgKiA-vCvm-WMsOq?usp=sharing)
 
 To see a rough outline of the steps I took in the repo, use [doitlive](https://github.com/sloria/doitlive) with the included session.sh script
 
