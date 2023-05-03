@@ -10,6 +10,8 @@ data from https://www.meetup.com/vue-js/events/292584374/attendees/
 
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/barakplasma/raffler)
 
+Deployed demo to https://raffler-frontend.onrender.com/Raffle and to https://directus-846u.onrender.com/
+
 ## alternative: docker compose
 You can use docker compose for working locally.
 
